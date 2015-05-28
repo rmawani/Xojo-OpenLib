@@ -1,7 +1,7 @@
 #tag Module
 Protected Module xol
 	#tag Method, Flags = &h0
-		Function xolURLEncode(pText as text) As text
+		Function URLEncode(pText as text) As text
 		  // Remove newline characters.
 		  pText = pText.ReplaceAll ( &u0A, "" )
 		  // Make substitutions...
@@ -41,7 +41,7 @@ Protected Module xol
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function xolURLShow(pURL As Text) As Boolean
+		Function URLShow(pURL As Text) As Boolean
 		  #IF TargetDesktop OR TargetWeb OR TargetConsole THEN
 		    
 		    ShowURL( pURL )

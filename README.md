@@ -3,8 +3,16 @@ An open library of methods and functions for Xojo.
 
 # Methods and Functions
 
+- Function FileTextSave(pFolderItem as folderItem, pText as text) As text
 - Function URLEncode(pText as text) As text
 - Function URLShow(pURL As Text) As Boolean
+- Sub MsgBoxAlert(pTitle as text, pMessage as text, pButton1Text as text)
+
+# Getting Started
+- Download Xojo from http://xojo.com/
+- Download this project.
+- Open the 'Xojo-OpenLib.xojo_project' file.
+- Look at the xol module.
 
 # Participate
 

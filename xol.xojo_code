@@ -1,6 +1,49 @@
 #tag Module
 Protected Module xol
 	#tag Method, Flags = &h0
+		Function FileTextSave(pFolderItem as folderItem, pText as text) As text
+		  #IF TargetDesktop OR TargetWeb OR TargetConsole THEN
+		    
+		  #ELSEIF TargetiOS THEN
+		    
+		    Dim output As TextOutputStream
+		    Try
+		      output = TextOutputStream.Create( pFolderItem, TextEncoding.UTF8)
+		      
+		      output.WriteLine( pText )
+		      
+		      output.Close
+		    Catch e As IOException
+		      return "Error: Unable to create or write to file."
+		    End Try
+		    
+		    return "OK"
+		    
+		  #ENDIF
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub MsgBoxAlert(pTitle as text, pMessage as text, pButton1Text as text)
+		  #IF TargetDesktop OR TargetWeb OR TargetConsole THEN
+		    
+		    MsgBox ( pTitle + ": " + pMessage )
+		    
+		  #ELSEIF TargetiOS THEN
+		    
+		    dim theMsgBox as new iOSMessageBox
+		    theMsgBox.Title = pTitle
+		    theMsgBox.Message = pMessage
+		    Dim buttons() As Text
+		    buttons.Append( pButton1Text )
+		    theMsgBox.Buttons = buttons
+		    theMsgBox.Show
+		    
+		  #ENDIF
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function URLEncode(pText as text) As text
 		  // Remove newline characters.
 		  pText = pText.ReplaceAll ( &u0A, "" )
