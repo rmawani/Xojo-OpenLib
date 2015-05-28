@@ -1,5 +1,7 @@
 *.xojo_uistate
 
-TempSaveFile*
+*TempSaveFile*
 
 .Xojo-OpenLib.xojo_uistate
+
+*xojo_code_obsolete*
