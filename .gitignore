@@ -1,3 +1,5 @@
 *.xojo_uistate
 
 TempSaveFile*
+
+.Xojo-OpenLib.xojo_uistate
