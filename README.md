@@ -7,10 +7,12 @@ If you'd like to submit anything, we'd love to add it.
 - Parameters should start with a 'p'.
 - If the code won't work on all platforms, wrap the code for its target.
 
-	```#IF TargetiOS THEN```
-		```Your Code Here```
-	```#ENDIF```
-	```or```
-	```#IF TargetDesktop OR TargetWeb OR TargetConsole THEN```
-		```Your Code Here```
-	```#ENDIF```
+```javascript
+#IF TargetiOS THEN
+	Your Code Here
+#ENDIF
+or
+#IF TargetDesktop OR TargetWeb OR TargetConsole THEN
+	Your Code Here
+#ENDIF
+```
