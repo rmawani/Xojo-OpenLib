@@ -18,7 +18,7 @@ An open library of methods and functions for Xojo.
 
 # Participate or Make a Request
 
-If you'd like to submit code or make a request create an issue:
+If you'd like to submit code or make a request, create an issue:
 - Click 'Issues' on the right hand side.
 - Click 'New issue'.
 - Choose a 'Label' on the right hand side.
