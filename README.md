@@ -1,6 +1,13 @@
 # Xojo-OpenLib
 An open library of methods and functions for Xojo.
 
+# Methods and Functions
+
+- Function xolURLEncode(pText as text) As text
+- Function xolURLShow(pURL As Text) As Boolean
+
+# Participate
+
 If you'd like to submit anything, we'd love to add it. 
 
 - All methods, functions, etc must be prefixed with 'xol' to prevent name conflicts.
