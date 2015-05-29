@@ -2,9 +2,23 @@
 Protected Module xol
 	#tag Method, Flags = &h0
 		Function FileTextSave(pFolderItem as folderItem, pText as text) As text
+		  
+		  // FileTextSave saves text to a FolderItem.
+		  // Hal Gumbert, CampSoftware: http://www.CampSoftware.com
+		  //
+		  // FileTextSave( pFolderItem as folderItem, pText as text )
+		  //
+		  // Call
+		  // dim result as text
+		  // result = FileTextSave( SpecialFolder.Documents.Child( "Xojo-OpenLib-FileTextSave.txt" ), FileTextSave_BeginTextArea.text.ToText )
+		  // MsgBoxAlert( "Alert", "Look in your Documents folder for a 'Xojo-OpenLib-FileTextSave.txt' file. The Result was" + result, "OK" )
+		  
+		  
 		  #IF TargetDesktop OR TargetWeb OR TargetConsole THEN
 		    
-		  #ELSEIF TargetiOS THEN
+		  #ENDIF
+		  
+		  #IF TargetiOS THEN
 		    
 		    Dim output As TextOutputStream
 		    Try
@@ -25,6 +39,16 @@ Protected Module xol
 
 	#tag Method, Flags = &h0
 		Sub MsgBoxAlert(pTitle as text, pMessage as text, pButton1Text as text)
+		  // MsgBoxAlert displays a dialog on Desktop and iOS.
+		  // Hal Gumbert, CampSoftware: http://www.CampSoftware.com
+		  //
+		  // MsgBoxAlert( pTitle as text, pMessage as text, pButton1Text as text )
+		  //
+		  // Call
+		  // dim result as text
+		  // MsgBoxAlert( "Alert", "Hello World!", "OK" )
+		  
+		  
 		  #IF TargetDesktop OR TargetWeb OR TargetConsole THEN
 		    
 		    MsgBox ( pTitle + ": " + pMessage )
@@ -44,7 +68,52 @@ Protected Module xol
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function TextParse(pText as text, pTagStart as text, pTagEnd as text) As text
+		  
+		  // TextParse extracts text between the starting text tag and the ending text tag.
+		  // Hal Gumbert, CampSoftware: http://www.CampSoftware.com
+		  //
+		  // TextParse( pText as text, pTagStart as text, pTagEnd as text )
+		  //
+		  // Call with a known begin and end tags
+		  // TextParse( "<name>Hal</name>", "<name>", "</name>" ) = Hal
+		  //
+		  // If you use an xml tag for the begin tag and leave the end tag empty, we assume that it's the closing xml tag. :)
+		  // TextParse( "<name>Hal</name>", "<name>", "" ) = Hal
+		  
+		  Dim theCodeStart, theCodeEnd, theTagStartLen as integer
+		  Dim theCode as string
+		  
+		  if pTagEnd = "" then
+		    pTagEnd = replace( pTagStart, "<", "</" ).ToText
+		  end if
+		  
+		  theTagStartLen = Len( pTagStart )
+		  
+		  theCodeStart = InStr ( pText, pTagStart )
+		  if theCodeStart > 0 then
+		    theCodeEnd = InStr ( theCodeStart + theTagStartLen, pText, pTagEnd )
+		    if ( theCodeEnd > 0 ) and ( theCodeEnd > theCodeStart ) then
+		      theCode = Mid ( pText, theCodeStart + theTagStartLen, theCodeEnd - theCodeStart - theTagStartLen )
+		    end if
+		  end if
+		  
+		  return theCode.ToText
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function URLEncode(pText as text) As text
+		  
+		  // URLEncode encodes the text that will change illegal chars in a URL to a hexadecimal code.
+		  // Tim Dietrich: http://www.timdietrich.me/
+		  //
+		  // URLEncode( pText as text )
+		  //
+		  // Call
+		  // URLEncode( "Tim Dietrich") = Tim%20Dietrich
+		  
+		  
 		  // Remove newline characters.
 		  pText = pText.ReplaceAll ( &u0A, "" )
 		  // Make substitutions...
@@ -85,6 +154,16 @@ Protected Module xol
 
 	#tag Method, Flags = &h0
 		Function URLShow(pURL As Text) As Boolean
+		  
+		  // URLShow loads a url on the devices web browser.
+		  // Hal Gumbert, CampSoftware: http://www.CampSoftware.com
+		  //
+		  // URLShow( pURL As Text )
+		  //
+		  // Call
+		  // URLShow( "http://www.CampSoftware.com" )
+		  
+		  
 		  #IF TargetDesktop OR TargetWeb OR TargetConsole THEN
 		    
 		    ShowURL( pURL )
@@ -116,5 +195,40 @@ Protected Module xol
 	#tag EndMethod
 
 
+	#tag ViewBehavior
+		#tag ViewProperty
+			Name="Index"
+			Visible=true
+			Group="ID"
+			InitialValue="-2147483648"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Left"
+			Visible=true
+			Group="Position"
+			InitialValue="0"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Name"
+			Visible=true
+			Group="ID"
+			Type="String"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Super"
+			Visible=true
+			Group="ID"
+			Type="String"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Top"
+			Visible=true
+			Group="Position"
+			InitialValue="0"
+			Type="Integer"
+		#tag EndViewProperty
+	#tag EndViewBehavior
 End Module
 #tag EndModule
