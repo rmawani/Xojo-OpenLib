@@ -24,6 +24,16 @@ If you'd like to submit code or make a request, create an issue:
 - Click 'New issue'.
 - Choose a 'Label' on the right hand side.
 - Enter a Title and a Comment. If you are submitting a method or function, right click it, choose copy, then paste it in the Comment box so we can add it to the library.
+- Please include a comment header similar to this in your methods and functions.
+```javascript
+// TextParse extracts text between the starting text tag and the ending text tag.
+// Hal Gumbert, CampSoftware: http://www.CampSoftware.com 
+//
+// TextParse( pText as text, pTagStart as text, pTagEnd as text )
+//
+// Call with a known begin and end tags
+// TextParse( "<name>Hal</name>", "<name>", "</name>" ) = Hal
+```
 
 # Suggestions
 
