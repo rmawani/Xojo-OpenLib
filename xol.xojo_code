@@ -38,6 +38,29 @@ Protected Module xol
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function InstrRev(pInstring as string, pDelim as string) As Integer
+		  // InstrRev is a reverse instr that returns the position of the last instance of a string within another string or zero if not found
+		  // Peter Job, RetroPrograms http://slt.retroprograms.com/ , from others
+		  //
+		  //result = InstrRev(source, find)
+		  // Call with a string to be searched and a string to be found:
+		  // Dim i as integer
+		  // i=InstrRev("abdefcdefg", "def") ' returns 7
+		  
+		  Dim i as integer
+		  If instr(pInstring,pDelim) < 1 then
+		    return 0
+		  end if
+		  For i=len(pInstring) downto 1
+		    If instr(i,pInstring,pDelim) > 0 then
+		      return instr(i,pInstring,pDelim)
+		    end if
+		  next
+		  return 0
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub MsgBoxAlert(pTitle as text, pMessage as text, pButton1Text as text)
 		  // MsgBoxAlert displays a dialog on Desktop and iOS.
 		  // Hal Gumbert, CampSoftware: http://www.CampSoftware.com
