@@ -1,0 +1,217 @@
+#tag Module
+Protected Module xfm
+	#tag Method, Flags = &h0
+		Function abs(extends theNum as double) As double
+		  'fmAbs
+		  'Returns the absolute value of number.
+		  'Example: fmAbs ( -5.2 ) = 5.2
+		  
+		  return abs( theNum )
+		End Function
+	#tag EndMethod
+
+
+	#tag Note, Name = fmFunctions to Add
+		
+		
+		fmCeiling
+		Returns number rounded up to the next integer.
+		Example: fmCeiling ( -5.2 ) = -5
+		
+		fmChar
+		Returns the characters for the Unicode code points in the number.
+		Example: fmChar ( 98 ) = b
+		
+		fmCode
+		Returns the Unicode code points for the characters in the text.
+		Example: fmCode ( 'b' ) = 98
+		
+		fmDate
+		Returns the calendar date for month, day, and year.
+		Example: fmDate ( 11, 27, 1968 ) = 11/27/1968
+		
+		fmDay
+		Returns a number in the range 1 through 31, representing the day of the month on which date occurs.
+		Example: fmDay ( '11/27/1968' ) = 27
+		
+		fmDayName
+		Returns a text string that is the full name of the weekday for date.
+		Example: fmDayName ( '11/27/1968' ) = Wednesday
+		
+		fmDayOfWeek
+		Returns a number representing the day of the week that date falls on. The number 1 represents Sunday, 2 represents Monday, 3 represents Tuesday, and so on.
+		Example: fmDayOfWeek ( '11/27/1968' ) = 4
+		
+		fmDayOfYear
+		Returns a number equal to the number of days from the beginning of the year of date.
+		Example: fmDayOfYear ( '11/27/1968' ) = 332
+		
+		fmExact
+		Compares the contents of any two fields. If the fields match, the result is 1 (True); otherwise, the result is 0 (False).
+		Example: fmExact ( 'McDonald', 'MCDOnald' ) = 0
+		
+		fmFilter
+		Returns from a given string only those characters specified in a second string, in the order that they were originally entered.
+		Example: fmFilter( '(408)555-1212', '0123456789' ) = 4085551212
+		
+		fmFloor
+		Returns number rounded down to the next lower integer.
+		Example: fmFilter( '(408)555-1212', '0123456789' ) = 4085551212
+		
+		fmGetAsDate
+		Returns dates in text as field type date, for use in formulas involving dates or date functions.
+		Example: fmGetAsDate ( '5/1/2007' ) = 5/1/2007
+		
+		fmGetAsNumber
+		Returns only the numbers in text, as field type number, for use with formulas involving numbers or numeric functions.
+		Example: fmGetAsNumber ( 'PLAT-NO.1234' ) = -.1234
+		
+		fmGetAsTime
+		Returns times or timestamps in text as field type time, for use with formulas involving the Time or Timestamp functions.
+		Example: fmGetAsTime ( '10:51:22' ) = 10:51:22
+		
+		fmGetAsTimestamp
+		Returns text as field type timestamp, for use with formulas involving timestamps.
+		Example: fmGetAsTimestamp ( '11/27/1968 10:51:22' ) = 11/27/1968 10:51:22 AM
+		
+		fmGetAsURLEncoded
+		Returns text as URL (Uniform Resource Locator) encoding, for use as a URL.
+		Example: fmGetAsURLEncoded ( 'San Diego' ) = San%20Diego
+		
+		fmGetCurrentDate
+		Returns the current date according to the system calendar.
+		Example: fmGetCurrentDate() = 6/21/2015
+		
+		fmGetCurrentTime
+		Returns CurrentTime (to the nearest second) according to the system clock.
+		Example: fmGetCurrentTime() = 06:13:31 PM
+		
+		fmGetCurrentTimeStamp
+		Returns the current date and time (to the nearest second) according to the system clock.
+		Example: fmGetCurrentTimeStamp() = 6/21/2015 18:13:31 PM
+		
+		fmHour
+		Returns a number representing the hour portion (0-23) of a specified time.
+		Example: fmHour ( '3:51:22 PM' ) = 15
+		
+		fmInt
+		Drops digits to the right of the decimal point and returns the integer part of number without rounding.
+		Example: fmInt ( -5.2 ) = -5
+		
+		fmLeft
+		Returns numberOfCharacters in text, counting from the left.
+		Example: fmLeft ( 'Xframe', 3 ) = Xfr
+		
+		fmLeftWords
+		Returns a text result containing numberOfWords in text, counting from the left.
+		Example: fmLeftWords ( 'This is a test.', 2 ) = This is
+		
+		fmLength
+		Returns the number of characters in field, including all spaces, numbers, and special characters.
+		Example: fmLength ( 'Xframe' ) = 6
+		
+		fmLower
+		Returns all letters in text as lowercase.
+		Example: fmLower ( 'This is a test.' ) = this is a test.
+		
+		fmMiddle
+		Extracts the numberOfCharacters from text, starting at the character position specified by start.
+		Example: fmMiddle ( 'Xframe', 2, 3 ) = fra
+		
+		fmMiddleWords
+		Returns a text result containing the numberOfWords from text, beginning at startingWord.
+		Example: fmMiddleWords ( 'This is a bigger test.', 2, 3 ) = is a bigger
+		
+		fmMinute
+		Returns a number representing the minute portion (0-59) of a specified time.
+		Example: fmMinute ( '3:51:22 PM' ) = 51
+		
+		fmMod
+		Returns the remainder after number is divided by divisor.
+		Example: fmMod ( 27, 11 ) = 5
+		
+		fmMonth
+		Returns a number in the range 1 through 12, representing the number of the month of the year in which date occurs.
+		Example: fmMonth ( '11/27/1968' ) = 11
+		
+		fmMonthName
+		Returns the full name of the month for date.
+		Example: fmMonthName ( '11/27/1968' ) = November
+		
+		fmPatternCount
+		Returns the number of occurrences of searchString in text.
+		Example: fmPatternCount ( 'FMWebFrame', 'frame' ) = 1
+		
+		fmPosition
+		Returns the starting position of the specified occurrence of searchString in text.
+		Example: fmPosition ( 'FMWebFrame', 'frame' ) = 6
+		
+		fmProper
+		Returns the first letter of each word in text as uppercase and all other letters as lowercase.
+		Example: fmProper ( 'this is a test.' ) = This Is A Test.
+		
+		fmRandom
+		Returns a number between two values, including the two values.
+		Note: The behavior of fmRandom is slightly differently from FileMaker's "Random" function, which returns a number between zero and one, including zero, but not including one.
+		Example: fmRandom ( 1, 100 ) = 73
+		
+		fmRight
+		Returns the specified numberOfCharacters in text, counting from the right.
+		Example: fmRight ( 'FMWebFrame', 5 ) = Frame
+		
+		fmRightWords
+		Returns a text result containing the numberOfWords in text, counting from the right.
+		Example: fmRightWords ( 'This is a test.', 2 ) = a test
+		
+		fmRound
+		Returns number rounded off to the specified precision (number of decimal places).
+		Example: fmRound ( 123.456, 2 ) = 123.46
+		
+		fmSeconds
+		Returns a number representing the seconds portion (0-59) of a specified time.
+		Example: fmSeconds ( '3:51:22 PM' ) = 22
+		
+		fmSerialIncrement
+		Returns the combined text and numbers specified by text, with the numbers in text incremented by the specified amount.
+		Example: fmSerialIncrement ( 'abc12', 1 ) = abc13
+		
+		fmSubstitute
+		Returns a text string with every occurrence of searchString in text replaced by replaceString in text.
+		Example: fmSubstitute ( 'Xframe', "ram", "stu" ) = Xfstue
+		
+		fmTime
+		Returns a time result with the specified number of hours, minutes, and seconds.
+		Example: fmTime ( 10, 51, 22 ) = 10:51:22
+		
+		fmTimestamp
+		Returns a timestamp containing date as a calendar date and time as a time of day.
+		Example: fmTimestamp ( fmGetAsDate ( '5/1/2007' ), fmGetAsTime ( '10:51:22' ) ) = 5/1/2007 10:51:22 AM
+		
+		fmTrim
+		Returns text stripped of all leading and trailing spaces.
+		Example: fmTrim ( ' This is a test. ' ) = This is a test.
+		
+		fmTruncate
+		Returns number truncated to the specified precision (number of decimal places).
+		Example: fmTruncate ( 123.456, 2 ) = 123.45
+		
+		fmUpper
+		Returns all letters in text as uppercase.
+		Example: fmUpper ( 'This is a test.' ) = THIS IS A TEST.
+		
+		fmWeekOfYear
+		Returns the number of weeks after January 1 of the year of date.
+		Example: fmWeekOfYear ( '11/27/1968' ) = 48
+		
+		fmWordCount
+		Returns a count of the total number of words in text.
+		Example: fmWordCount ( 'This is a test.' ) = 4
+		
+		fmYear
+		Returns a number representing the year in which date occurs.
+		Example: fmYear ( '11/27/1968' ) = 1968
+	#tag EndNote
+
+
+End Module
+#tag EndModule
