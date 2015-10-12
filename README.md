@@ -20,7 +20,7 @@ Miscellaneous
 - Function URLEncode(pText as text) As text
 - Function URLShow(pURL As Text) As Boolean
 
-FM Functions - these are to make moving to Xojo from FileMaker a bit easier.
+FM Functions - To make moving to Xojo from FileMaker a bit easier.
 The list of functions is from Tim Dietrich http://fmwebframe.com/application/fm-to-php-translations.php 
 which was originally developed by Jonathan Stark: http://jonathanstark.com
 - Function fmAbs(theNum as double) As double

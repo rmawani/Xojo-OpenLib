@@ -426,9 +426,19 @@ Protected Module xol
 		  
 		  // Code
 		  
-		  #IF TargetDesktop OR TargetWeb OR TargetConsole THEN
+		  #IF TargetDesktop THEN
 		    
 		    ShowURL( pURL )
+		    Return true  // doesn't return a value so assume true.
+		    
+		  #ENDIF
+		  
+		  // ==============================================
+		  
+		  #IF TargetWeb THEN
+		    
+		    dim theWebControl as WebLabel
+		    theWebControl.ShowURL( pURL, true )
 		    Return true  // doesn't return a value so assume true.
 		    
 		  #ENDIF
