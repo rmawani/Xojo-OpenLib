@@ -6,6 +6,8 @@ If you'd like to submit code, make a request, report a bug, or offer better code
 
 # Methods and Functions
 
+![Xojo-OpenLib Methods](campsoftware.github.com/campsoftware/Xojo-OpenLib/Xojo-OpenLib.png)
+
 Miscellaneous
 - Function DateDayofWeek(extends pDate as Date) As text
 - Function FileTextSave(pFolderItem as folderItem, pText as text) As text
