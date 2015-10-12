@@ -1,6 +1,36 @@
 #tag Module
 Protected Module xol
 	#tag Method, Flags = &h0
+		Function DateDayofWeek(pDate as Date) As text
+		  return pDate.DateDayofWeek
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function DateDayofWeek(extends pDate as Date) As text
+		  // DateDayofWeek
+		  // Unknown Origin
+		  
+		  Select Case pDate.DayOfWeek
+		  Case 1
+		    return "Sunday"
+		  Case 2
+		    return "Monday"
+		  Case 3
+		    return "Tuesday"
+		  Case 4
+		    return "Wednesday"
+		  Case 5
+		    return "Thursday"
+		  Case 6
+		    return "Friday"
+		  Case 7
+		    return "Saturday"
+		  End Select
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function FileTextSave(pFolderItem as folderItem, pText as text) As text
 		  // FileTextSave saves text to a FolderItem.
 		  // Hal Gumbert, CampSoftware: http://www.CampSoftware.com
@@ -99,6 +129,187 @@ Protected Module xol
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function FolderItemCopy(source as FolderItem, destination as FolderItem) As Boolean
+		  // From http://docs.xojo.com/index.php/FolderItem
+		  
+		  Dim newFolder As FolderItem
+		  If source.Directory then //it's a folder
+		    newFolder = destination.Child(source.Name)
+		    newFolder.CreateAsFolder
+		    if not newFolder.Exists or not newFolder.Directory Then
+		      // folder was not created - abort
+		      Return False
+		    End If
+		    For i As Integer = 1 To source.Count //go through each item
+		      Dim sourceItem as FolderItem = source.TrueItem(i)
+		      If sourceItem = nil Then
+		        // inaccessible
+		        Return False
+		      End If
+		      If not folderItemCopy (sourceItem, newFolder) Then
+		        //copy operation failed
+		        Return False
+		      End If
+		    Next
+		  Else //it's not a folder
+		    source.CopyFileTo destination
+		    If source.LastErrorCode <> 0 Then
+		      Return False
+		    End If
+		  End if
+		  
+		  Return True
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function FolderItemDelete(theFolder as FolderItem, continueIfErrors as Boolean = false) As Integer
+		  // From: http://docs.xojo.com/index.php/FolderItem.Delete
+		  
+		  // Returns an error code if it fails, or zero if the folder was deleted successfully
+		  
+		  dim returnCode, lastErr, itemCount as integer
+		  dim files(), dirs() as FolderItem
+		  
+		  if theFolder = nil or not theFolder.Exists() then
+		    return 0
+		  end if
+		  
+		  // Collect the folder‘s contents first.
+		  // This is faster than collecting them in reverse order and deleting them right away!
+		  itemCount = theFolder.Count
+		  for i as integer = 1 to itemCount
+		    dim f as FolderItem
+		    f = theFolder.TrueItem( i )
+		    if f <> nil then
+		      if f.Directory then
+		        dirs.Append f
+		      else
+		        files.Append f
+		      end if
+		    end if
+		  next
+		  
+		  // Now delete the files
+		  for each f as FolderItem in files
+		    f.Delete
+		    lastErr = f.LastErrorCode   // Check if an error occurred
+		    if lastErr <> 0 then
+		      if continueIfErrors then
+		        if returnCode = 0 then returnCode = lastErr
+		      else
+		        // Return the error code if any. This will cancel the deletion.
+		        return lastErr
+		      end if
+		    end if
+		  next
+		  
+		  redim files(-1) // free the memory used by the files array before we enter recursion
+		  
+		  // Now delete the directories
+		  for each f as FolderItem in dirs
+		    lastErr = folderItemDelete( f, continueIfErrors )
+		    if lastErr <> 0 then
+		      if continueIfErrors then
+		        if returnCode = 0 then returnCode = lastErr
+		      else
+		        // Return the error code if any. This will cancel the deletion.
+		        return lastErr
+		      end if
+		    end if
+		  next
+		  
+		  if returnCode = 0 then
+		    // We‘re done without error, so the folder should be empty and we can delete it.
+		    theFolder.Delete
+		    returnCode = theFolder.LastErrorCode
+		  end if
+		  
+		  return returnCode
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function Increment(Extends pInteger As Integer, pAmount As Integer = 1) As Integer
+		  // Increment
+		  // Unknown Origin
+		  
+		  return pInteger + pAmount
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function Increment(pInteger As Integer, pAmount As Integer = 1) As Integer
+		  return pInteger.Increment
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function IsEmpty(Extends pString As string) As Boolean
+		  If pString = "" Then
+		    Return True
+		  Else
+		    Return False
+		  End If
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function IsEmpty(Extends pText As text) As Boolean
+		  If pText = "" Then
+		    Return True
+		  Else
+		    Return False
+		  End If
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function IsEmpty(pString As string) As Boolean
+		  return pString.IsEmpty
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function IsEmpty(pText As text) As Boolean
+		  return pText.IsEmpty
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function IsNotEmpty(Extends pString As string) As Boolean
+		  If pString = "" Then
+		    Return False
+		  Else
+		    Return True
+		  End If
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function IsNotEmpty(Extends pText As text) As Boolean
+		  If pText = "" Then
+		    Return False
+		  Else
+		    Return True
+		  End If
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function IsNotEmpty(pString As string) As Boolean
+		  return pString.IsNotEmpty
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function IsNotEmpty(pText As text) As Boolean
+		  return pText.IsNotEmpty
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub MsgBoxAlert(pTitle as text, pMessage as text, pButton1Text as text)
 		  // MsgBoxAlert displays a dialog on Desktop and iOS.
 		  // Hal Gumbert, CampSoftware: http://www.CampSoftware.com
@@ -131,7 +342,45 @@ Protected Module xol
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function StringInstrRev(pInstring as string, pDelim as string) As Integer
+		Function PictureScale(extends Pic as picture, Width as integer, Height as Integer) As auto
+		  // PictureScale
+		  // Unknown Origin
+		  
+		  #IF TargetDesktop OR TargetWeb OR TargetConsole THEN
+		    
+		    'To use it, load your image into a new picture, then assign it to your
+		    'webimageviewer control like this (assuming wp is the control and pic is the
+		    'picture):
+		    '
+		    'wp.Picture = pic.ImageScale( wp.Width, wp.Height )
+		    
+		    
+		    // Calculate scale factor
+		    dim factor as Double = min( Height / Pic.Height, Width / Pic.Width)
+		    
+		    // Calculate new size
+		    dim w as integer = Pic.Width * factor
+		    dim h as integer = Pic.Height * factor
+		    
+		    // create new picture
+		    dim NewPic as new Picture(w,h,32)
+		    NewPic.Transparent = 1
+		    
+		    // draw picture in the new size
+		    NewPic.Graphics.DrawPicture( Pic, 0, 0, w, h, 0, 0, Pic.Width, Pic.Height )
+		    
+		    // return result
+		    Return NewPic
+		    
+		  #ELSEIF TargetiOS THEN
+		    
+		  #ENDIF
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function StringInstrRev(extends pInstring as string, pDelim as string) As Integer
 		  // InstrRev is a reverse instr that returns the position of the last instance of a string within another string or zero if not found
 		  // Peter Job, RetroPrograms http://slt.retroprograms.com/ , from others
 		  //
@@ -161,6 +410,12 @@ Protected Module xol
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function StringInstrRev(pInstring as string, pDelim as string) As Integer
+		  return pInstring.StringInstrRev( pDelim )
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function StringToText(extends theString as string) As text
 		  // StringToText converts a string to text.
 		  // Hal Gumbert, CampSoftware: http://www.CampSoftware.com
@@ -177,6 +432,108 @@ Protected Module xol
 		  
 		  theString = theString.DefineEncoding( Encodings.UTF8 )
 		  Return theString.ToText
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function StringToText(theString as string) As text
+		  Return theString.StringToText
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function TextAsc(theText as text) As integer
+		  // TextAsc
+		  // Unknown Origin
+		  
+		  For Each codePoint As UInt32 In theText.Codepoints
+		    
+		    // return the first asc code
+		    return codePoint
+		    
+		  Next
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function TextBytesFormatted(Bytes as Double) As text
+		  // TextBytesFormatted
+		  // Unknown Origin
+		  
+		  // Code
+		  
+		  #IF TargetDesktop OR TargetWeb OR TargetConsole THEN
+		    
+		    dim theSize as string
+		    
+		    Select Case Bytes
+		      
+		    Case is < pow ( 1024 , 1 )
+		      theSize = Format ( Bytes , theFormatFileSize ) + " Bytes"
+		      
+		    Case is < pow ( 1024 , 2 )
+		      theSize = Format ( Bytes / pow ( 1024 , 1 ) , theFormatFileSize ) + " KB"
+		      
+		    Case is < pow ( 1024 , 3 )
+		      theSize = Format ( Bytes / pow ( 1024 , 2 ) , theFormatFileSize ) + " MB"
+		      
+		    Case is < pow ( 1024 , 4 )
+		      theSize = Format ( Bytes / pow ( 1024 , 3 ) , theFormatFileSize ) + " GB"
+		      
+		    Case is < pow ( 1024 , 5 )
+		      theSize = Format ( Bytes / pow ( 1024 , 4 ) , theFormatFileSize ) + " TB"
+		      
+		    End Select
+		    
+		    return theSize.ToText
+		    
+		  #ELSEIF TargetiOS THEN
+		    
+		  #ENDIF
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function TextChr(pInteger as Integer) As text
+		  // TextChr
+		  // Unknown Origin
+		  
+		  return Text.FromUnicodeCodepoint( pInteger )
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function TextFilter(theText as text, theFilter as text) As text
+		  // TextFilter
+		  // Unknown Origin
+		  
+		  #IF TargetDesktop OR TargetWeb OR TargetConsole THEN
+		    
+		    // Returns from theText only those characters specified in theFilter, in the order they were originally entered in theText.
+		    //
+		    // textFilter( theText as text, theFilter as text ) as text
+		    //
+		    // textFilter ( "(407) 555-1212", "0123456789"  ) = 4075551212
+		    
+		    dim theChar, outputText as string
+		    dim i as integer = 0
+		    
+		    do until i > len( theText )
+		      
+		      i = i + 1
+		      theChar = mid( theText, i, 1 )
+		      
+		      if InStr( theFilter, theChar ) > 0 then
+		        outputText = outputText + theChar  // Found theChar so include it for output
+		      end if
+		      
+		    loop
+		    
+		    return outputText.ToText
+		    
+		  #ELSEIF TargetiOS THEN
+		    
+		  #ENDIF
 		End Function
 	#tag EndMethod
 
@@ -217,6 +574,36 @@ Protected Module xol
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function TextParse(pText as text, pTagStart as text, pTagEnd as text) As text
+		  return pText.TextParse( pTagStart, pTagEnd )
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function TextQuoteDouble(Extends theText as Text) As Text
+		  // TextQuoteDouble wraps text in single quotes.
+		  // Hal Gumbert, CampSoftware: http://www.CampSoftware.com
+		  //
+		  // Function TextQuoteDouble(Extends theText as Text) As Text
+		  //
+		  // Calling Example
+		  
+		  'dim theText as text = "Hal"
+		  'theText = theText.TextQuoteSingle
+		  
+		  // Code
+		  
+		  return chr( 34 ).ToText + theText + chr( 34 ).ToText
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function TextQuoteDouble(pText as Text) As Text
+		  return pText.TextQuoteDouble
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function TextQuoteSingle(Extends theText as Text) As Text
 		  // TextQuoteSingle wraps text in single quotes.
 		  // Hal Gumbert, CampSoftware: http://www.CampSoftware.com
@@ -235,7 +622,13 @@ Protected Module xol
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function TextRandomValue(pText as text, pDelimiter as text) As text
+		Function TextQuoteSingle(pText as Text) As Text
+		  return pText.TextQuoteSingle
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function TextRandomValue(extends pText as text, pDelimiter as text) As text
 		  // TextRandomValue returns a Random Value from the Text.
 		  // Hal Gumbert, CampSoftware: http://www.CampSoftware.com
 		  //
@@ -258,6 +651,12 @@ Protected Module xol
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function TextRandomValue(pText as text, pDelimiter as text) As text
+		  return pText.TextRandomValue( pDelimiter )
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function TextToDouble(extends theText as text) As double
 		  // TextToDouble converts a number in text to a double.
 		  // Hal Gumbert, CampSoftware: http://www.CampSoftware.com
@@ -273,6 +672,12 @@ Protected Module xol
 		  // Code
 		  
 		  return Double.FromText( theText )
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function TextToDouble(theText as text) As double
+		  return theText.TextToDouble
 		End Function
 	#tag EndMethod
 
@@ -326,11 +731,6 @@ Protected Module xol
 		  "-" + result.RightB(12)
 		  
 		  return result.ToText
-		  
-		  // From MBS Plugin
-		  'dim u as UUIDMBS
-		  'u=new UUIDMBS
-		  'return EncodingToHexMBS(u.ValueString).ToText
 		End Function
 	#tag EndMethod
 
@@ -364,7 +764,6 @@ Protected Module xol
 
 	#tag Method, Flags = &h0
 		Function URLEncode(extends pText as text) As text
-		  
 		  // URLEncode encodes the text that will change illegal chars in a URL to a hexadecimal code.
 		  // Tim Dietrich: http://www.timdietrich.me/
 		  //
@@ -374,6 +773,7 @@ Protected Module xol
 		  // URLEncode( "Tim Dietrich") = Tim%20Dietrich
 		  
 		  // Code
+		  
 		  // Remove newline characters.
 		  pText = pText.ReplaceAll ( &u0A, "" )
 		  // Make substitutions...
@@ -409,6 +809,12 @@ Protected Module xol
 		  pText = pText.ReplaceAll ( "|", "%7C" )
 		  pText = pText.ReplaceAll ( "}", "%7D" )
 		  return pText
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function URLEncode(pText as text) As text
+		  return pText.URLEncode
 		End Function
 	#tag EndMethod
 
@@ -652,6 +1058,10 @@ Protected Module xol
 		Returns a number representing the year in which date occurs.
 		Example: fmYear ( '11/27/1968' ) = 1968
 	#tag EndNote
+
+
+	#tag Constant, Name = theFormatFileSize, Type = Text, Dynamic = False, Default = \"###\x2C###\x2C###\x2C###\x2C###", Scope = Public
+	#tag EndConstant
 
 
 	#tag ViewBehavior
