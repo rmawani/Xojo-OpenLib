@@ -48,10 +48,9 @@ which was originally developed by Jonathan Stark: http://jonathanstark.com
 - Almost every Method and Function have comments regarding who developed it, the source, and a calling example.
 - Thanks to Kem Tekenay explaining 'signatures'! Each function that has an extends parameter can also be called using extends or like a regular method. Here's an example how  TextQuoteSingle can be called. 
 ```javascript
+// Using Extends.
 myText = myText.TextQuoteSingle
-```
-or
-```javascript
+// Using as a normal method.
 myText = TextQuoteSingle( myText )
 ```
 
