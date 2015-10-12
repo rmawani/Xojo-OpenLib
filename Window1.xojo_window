@@ -9,7 +9,7 @@ Begin Window Window1
    FullScreen      =   False
    FullScreenButton=   False
    HasBackColor    =   False
-   Height          =   400
+   Height          =   606
    ImplicitInstance=   True
    LiveResize      =   True
    MacProcID       =   0
@@ -25,7 +25,7 @@ Begin Window Window1
    Resizeable      =   True
    Title           =   "Xojo-OpenLib"
    Visible         =   True
-   Width           =   600
+   Width           =   996
    Begin Label HeaderLabel
       AutoDeactivate  =   True
       Bold            =   False
@@ -60,155 +60,12 @@ Begin Window Window1
       Visible         =   True
       Width           =   320
    End
-   Begin PushButton TestFMFunctionsButton
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   False
-      Caption         =   "Test FM Functions"
-      Default         =   False
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   413
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   1
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   20
-      Underline       =   False
-      Visible         =   True
-      Width           =   167
-   End
-   Begin TextArea TextListbox
-      AcceptTabs      =   False
-      Alignment       =   0
-      AutoDeactivate  =   True
-      AutomaticallyCheckSpelling=   False
-      BackColor       =   &cFFFFFF00
-      Bold            =   False
-      Border          =   True
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Format          =   ""
-      Height          =   296
-      HelpTag         =   ""
-      HideSelection   =   True
-      Index           =   -2147483648
-      Italic          =   False
-      Left            =   20
-      LimitText       =   0
-      LineHeight      =   0.0
-      LineSpacing     =   1.0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Mask            =   ""
-      Multiline       =   True
-      ReadOnly        =   False
-      Scope           =   0
-      ScrollbarHorizontal=   False
-      ScrollbarVertical=   True
-      Styled          =   True
-      TabIndex        =   2
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   ""
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   84
-      Underline       =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   560
-   End
-   Begin PushButton TestMiscButton
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   False
-      Caption         =   "Test Misc Functions"
-      Default         =   False
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   413
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   3
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   52
-      Underline       =   False
-      Visible         =   True
-      Width           =   167
-   End
 End
 #tag EndWindow
 
 #tag WindowCode
 #tag EndWindowCode
 
-#tag Events TestFMFunctionsButton
-	#tag Event
-		Sub Action()
-		  TextListbox.Text = ""
-		  
-		  dim theText, theReturn as text
-		  theReturn = chr(13).ToText
-		  
-		  theText = theText + "xol.fmAbs( -23.33 ) = " + xol.fmAbs( -23.33 ).totext + theReturn
-		  theText = theText + "xol.fmCeiling( 1.234 ) = " + xol.fmCeiling( 1.234 ).totext + theReturn
-		  
-		  TextListbox.Text = theText
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events TestMiscButton
-	#tag Event
-		Sub Action()
-		  TextListbox.Text = ""
-		  
-		  dim theText, theReturn as text
-		  theReturn = chr(13).ToText
-		  
-		  theText = theText + "xol.FileTextSave not tested." + theReturn
-		  theText = theText + "xol.InstrRev(""abdefcdefg"", ""def"") = " + xol.InstrRev("abdefcdefg", "def").ToText + theReturn
-		  theText = theText + "xol.MsgBoxAlert not tested." + theReturn
-		  theText = theText + "xol.TextParse( ""<name>Hal</name>"", ""<name>"", """" ) = " + xol.TextParse( "<name>Hal</name>", "<name>", "" ) + theReturn
-		  theText = theText + "xol.URLEncode( ""Tim Dietrich"") = " + xol.URLEncode( "Tim Dietrich") + theReturn
-		  theText = theText + "xol.URLShow not tested." + theReturn
-		  
-		  TextListbox.Text = theText
-		End Sub
-	#tag EndEvent
-#tag EndEvents
 #tag ViewBehavior
 	#tag ViewProperty
 		Name="BackColor"

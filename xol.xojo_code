@@ -2,17 +2,18 @@
 Protected Module xol
 	#tag Method, Flags = &h0
 		Function FileTextSave(pFolderItem as folderItem, pText as text) As text
-		  
 		  // FileTextSave saves text to a FolderItem.
 		  // Hal Gumbert, CampSoftware: http://www.CampSoftware.com
 		  //
-		  // FileTextSave( pFolderItem as folderItem, pText as text )
+		  // Function FileTextSave(pFolderItem as folderItem, pText as text) As text
 		  //
-		  // Call
-		  // dim result as text
-		  // result = FileTextSave( SpecialFolder.Documents.Child( "Xojo-OpenLib-FileTextSave.txt" ), FileTextSave_BeginTextArea.text.ToText )
-		  // MsgBoxAlert( "Alert", "Look in your Documents folder for a 'Xojo-OpenLib-FileTextSave.txt' file. The Result was" + result, "OK" )
+		  // Calling Example
 		  
+		  'dim result as text
+		  'result = FileTextSave( SpecialFolder.Documents.Child( "Xojo-OpenLib-FileTextSave.txt" ), FileTextSave_BeginTextArea.text.ToText )
+		  'MsgBoxAlert( "Alert", "Look in your Documents folder for a 'Xojo-OpenLib-FileTextSave.txt' file. The Result was" + result, "OK" )
+		  
+		  // Code
 		  
 		  #IF TargetDesktop OR TargetWeb OR TargetConsole THEN
 		    
@@ -38,45 +39,62 @@ Protected Module xol
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function fmAbs(theNum as double) As double
+		Function fmAbs(pNum as double) As double
 		  'fmAbs
 		  'Returns the absolute value of number.
 		  'Example: fmAbs ( -5.2 ) = 5.2
 		  
-		  return abs( theNum )
+		  return abs(  pNum )
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function fmCeiling(theNum as double) As double
+		Function fmCeiling(pNum as double) As double
 		  'fmCeiling
 		  'Returns number rounded up to the next integer.
 		  'Example: fmCeiling ( -5.2 ) = -5
 		  
-		  return ceil( theNum )
+		  return ceil( pNum )
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function InstrRev(pInstring as string, pDelim as string) As Integer
-		  // InstrRev is a reverse instr that returns the position of the last instance of a string within another string or zero if not found
-		  // Peter Job, RetroPrograms http://slt.retroprograms.com/ , from others
-		  //
-		  //result = InstrRev(source, find)
-		  // Call with a string to be searched and a string to be found:
-		  // Dim i as integer
-		  // i=InstrRev("abdefcdefg", "def") ' returns 7
+		Function fmChar(pCodeNumber as Integer) As text
+		  'fmChar
+		  'Returns the characters for the Unicode code points in the number.
+		  'Example: fmChar ( 98 ) = b
 		  
-		  Dim i as integer
-		  If instr(pInstring,pDelim) < 1 then
-		    return 0
+		  return Text.FromUnicodeCodepoint( pCodeNumber )
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function fmCode(pChar as text) As integer
+		  'fmCode
+		  'Returns the Unicode code points for the characters in the text.
+		  'Example: fmCode ( 'b' ) = 98
+		  
+		  For Each codePoint As UInt32 In pChar.Codepoints
+		    return codePoint
+		  Next
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function fmDate(pMonth as integer, pDay as integer, pYear as integer) As xojo.core.Date
+		  'fmDate
+		  'Returns the calendar date for month, day, and year.
+		  'Example: fmDate ( 11, 27, 1968 ) = 11/27/1968
+		  
+		  dim theDate as xojo.core.Date
+		  
+		  if pMonth > 0 and pDay > 0 and pYear > 0 then
+		    theDate = xojo.core.date.fromtext( pYear.ToText + "-" + pMonth.ToText + "-" + pDay.ToText )
+		  else
+		    theDate = Xojo.Core.Date.Now
 		  end if
-		  For i=len(pInstring) downto 1
-		    If instr(i,pInstring,pDelim) > 0 then
-		      return instr(i,pInstring,pDelim)
-		    end if
-		  next
-		  return 0
+		  
+		  Return theDate
 		End Function
 	#tag EndMethod
 
@@ -85,12 +103,14 @@ Protected Module xol
 		  // MsgBoxAlert displays a dialog on Desktop and iOS.
 		  // Hal Gumbert, CampSoftware: http://www.CampSoftware.com
 		  //
-		  // MsgBoxAlert( pTitle as text, pMessage as text, pButton1Text as text )
+		  // Sub MsgBoxAlert(pTitle as text, pMessage as text, pButton1Text as text)
 		  //
-		  // Call
-		  // dim result as text
-		  // MsgBoxAlert( "Alert", "Hello World!", "OK" )
+		  // Calling Example
 		  
+		  'dim result as text
+		  'MsgBoxAlert( "Alert", "Hello World!", "OK" )
+		  
+		  // Code
 		  
 		  #IF TargetDesktop OR TargetWeb OR TargetConsole THEN
 		    
@@ -111,18 +131,69 @@ Protected Module xol
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function TextParse(pText as text, pTagStart as text, pTagEnd as text) As text
+		Function StringInstrRev(pInstring as string, pDelim as string) As Integer
+		  // InstrRev is a reverse instr that returns the position of the last instance of a string within another string or zero if not found
+		  // Peter Job, RetroPrograms http://slt.retroprograms.com/ , from others
+		  //
+		  // Function StringInstrRev(pInstring as string, pDelim as string) As Integer
+		  //
+		  // Call with a string to be searched and a string to be found
+		  // result = InstrRev(source, find)
+		  //
+		  // Calling Example
 		  
+		  'Dim i as integer
+		  'i = StringInstrRev( "abdefcdefg", "def" ) ' returns 7
+		  
+		  // Code
+		  
+		  Dim i as integer
+		  If instr(pInstring,pDelim) < 1 then
+		    return 0
+		  end if
+		  For i=len(pInstring) downto 1
+		    If instr(i,pInstring,pDelim) > 0 then
+		      return instr(i,pInstring,pDelim)
+		    end if
+		  next
+		  return 0
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function StringToText(extends theString as string) As text
+		  // StringToText converts a string to text.
+		  // Hal Gumbert, CampSoftware: http://www.CampSoftware.com
+		  //
+		  // Function StringToText(theString as string) As text
+		  //
+		  // Calling Example
+		  
+		  'dim theString as string = "Hal"
+		  'dim theText as text
+		  'theText = theString.StringToText
+		  
+		  // Code
+		  
+		  theString = theString.DefineEncoding( Encodings.UTF8 )
+		  Return theString.ToText
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function TextParse(extends pText as text, pTagStart as text, pTagEnd as text) As text
 		  // TextParse extracts text between the starting text tag and the ending text tag.
 		  // Hal Gumbert, CampSoftware: http://www.CampSoftware.com
 		  //
 		  // TextParse( pText as text, pTagStart as text, pTagEnd as text )
-		  //
+		  
 		  // Call with a known begin and end tags
 		  // TextParse( "<name>Hal</name>", "<name>", "</name>" ) = Hal
 		  //
 		  // If you use an xml tag for the begin tag and leave the end tag empty, we assume that it's the closing xml tag. :)
 		  // TextParse( "<name>Hal</name>", "<name>", "" ) = Hal
+		  
+		  // Code
 		  
 		  Dim theCodeStart, theCodeEnd, theTagStartLen as integer
 		  Dim theCode as string
@@ -146,7 +217,153 @@ Protected Module xol
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function URLEncode(pText as text) As text
+		Function TextQuoteSingle(Extends theText as Text) As Text
+		  // TextQuoteSingle wraps text in single quotes.
+		  // Hal Gumbert, CampSoftware: http://www.CampSoftware.com
+		  //
+		  // Function TextQuoteSingle(Extends theText as Text) As Text
+		  //
+		  // Calling Example
+		  
+		  'dim theText as text = "Hal"
+		  'theText = theText.TextQuoteSingle
+		  
+		  // Code
+		  
+		  return chr(39).ToText + theText + chr(39).ToText
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function TextRandomValue(pText as text, pDelimiter as text) As text
+		  // TextRandomValue returns a Random Value from the Text.
+		  // Hal Gumbert, CampSoftware: http://www.CampSoftware.com
+		  //
+		  // Function TextRandomValue(pText as text, pDelimiter as text) As text
+		  //
+		  // Calling Example
+		  
+		  'dim randomString as text = randomTextValue( "Hal,Tim, Michael", "," )
+		  
+		  dim theValuesArray() As text
+		  theValuesArray = pText.Split( pDelimiter )
+		  
+		  dim theRandom As New Random
+		  dim theIndex As Integer = theRandom.InRange( 0, theValuesArray.ubound )
+		  
+		  dim theValue as text = theValuesArray( theIndex )
+		  
+		  return theValue
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function TextToDouble(extends theText as text) As double
+		  // TextToDouble converts a number in text to a double.
+		  // Hal Gumbert, CampSoftware: http://www.CampSoftware.com
+		  //
+		  // Function TextToDouble(extends theText as text) As double
+		  //
+		  // Calling Example
+		  
+		  'dim theText as text = "3.14"
+		  'dim theDouble as Double
+		  'theDouble = theText.TextToDouble
+		  
+		  // Code
+		  
+		  return Double.FromText( theText )
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function TextUUIDGenerate() As text
+		  // Generate a UUID and assign it
+		  
+		  // From Kem Tekinay's post on 2015-03-06 on https://forum.xojo.com/18029-native-uuid-generation
+		  // From http://www.cryptosys.net/pki/uuid-rfc4122.html
+		  //
+		  // Generate 16 random bytes (=128 bits)
+		  // Adjust certain bits according to RFC 4122 section 4.4 as follows:
+		  // set the four most significant bits of the 7th byte to 0100'B, so the high nibble is '4'
+		  // set the two most significant bits of the 9th byte to 10'B, so the high nibble will be one of '8', '9', 'A', or 'B'.
+		  // Convert the adjusted bytes to 32 hexadecimal digits
+		  // Add four hyphen '-' characters to obtain blocks of 8, 4, 4, 4 and 12 hex digits
+		  // Output the resulting 36-character string "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+		  
+		  // CALLING EXAMPLE
+		  'dim theUUID as text = EasyDataHelpers.UUIDGenerate
+		  'MsgBoxAlert ( "", theUUID, "OK" )
+		  '
+		  'if UUIDValidate( theUUID ) then
+		  'MsgBoxAlert ( "", "UUID is Valid", "OK" )
+		  'else
+		  'MsgBoxAlert ( "", "UUID is not Valid", "OK" )
+		  'end if
+		  
+		  dim randomBytes as MemoryBlock = Crypto.GenerateRandomBytes(16)
+		  randomBytes.LittleEndian = false
+		  
+		  //
+		  // Adjust seventh byte
+		  //
+		  dim value as byte = randomBytes.Byte(6)
+		  value = value and &b00001111 // Turn off the first four bits
+		  value = value or &b01000000 // Turn on the second bit
+		  randomBytes.Byte(6) = value
+		  
+		  //
+		  // Adjust ninth byte
+		  //
+		  value = randomBytes.Byte(8)
+		  value = value and &b00111111 // Turn off the first two bits
+		  value = value or &b10000000 // Turn on the first bit
+		  randomBytes.Byte(8) = value
+		  
+		  
+		  dim result as string = EncodeHex(randomBytes)
+		  result = result.LeftB(8) + "-" + result.MidB(9, 4) + "-" + result.MidB(13, 4) + "-" + result.MidB(17, 4) + _
+		  "-" + result.RightB(12)
+		  
+		  return result.ToText
+		  
+		  // From MBS Plugin
+		  'dim u as UUIDMBS
+		  'u=new UUIDMBS
+		  'return EncodingToHexMBS(u.ValueString).ToText
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function TextUUIDValidate(s As text) As Boolean
+		  // From Kem Tekinay's post on 2015-03-06 on https://forum.xojo.com/18029-native-uuid-generation
+		  
+		  // Validates a RFC-4122 random UUID like the ones generated by
+		  // UUIDGenerate
+		  
+		  // CALLING EXAMPLE
+		  'dim theUUID as text = EasyDataHelpers.UUIDGenerate
+		  'MsgBoxAlert ( "", theUUID, "OK" )
+		  '
+		  'if UUIDValidate( theUUID ) then
+		  'MsgBoxAlert ( "", "UUID is Valid", "OK" )
+		  'else
+		  'MsgBoxAlert ( "", "UUID is not Valid", "OK" )
+		  'end if
+		  
+		  
+		  static rxValidator as RegEx
+		  if rxValidator is nil then
+		    rxValidator = new RegEx
+		    rxValidator.SearchPattern = "(?mi-Us)\A[[:xdigit:]]{8}-[[:xdigit:]]{4}-4[[:xdigit:]]{3}-[89AB][[:xdigit:]]{3}-[[:xdigit:]]{12}\z"
+		  end if
+		  
+		  return rxValidator.Search(s) IsA RegExMatch
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function URLEncode(extends pText as text) As text
 		  
 		  // URLEncode encodes the text that will change illegal chars in a URL to a hexadecimal code.
 		  // Tim Dietrich: http://www.timdietrich.me/
@@ -156,7 +373,7 @@ Protected Module xol
 		  // Call
 		  // URLEncode( "Tim Dietrich") = Tim%20Dietrich
 		  
-		  
+		  // Code
 		  // Remove newline characters.
 		  pText = pText.ReplaceAll ( &u0A, "" )
 		  // Make substitutions...
@@ -204,8 +421,10 @@ Protected Module xol
 		  // URLShow( pURL As Text )
 		  //
 		  // Call
-		  // URLShow( "http://www.CampSoftware.com" )
 		  
+		  'URLShow( "http://www.CampSoftware.com" )
+		  
+		  // Code
 		  
 		  #IF TargetDesktop OR TargetWeb OR TargetConsole THEN
 		    
@@ -241,18 +460,6 @@ Protected Module xol
 	#tag Note, Name = fmFunctions to Add
 		Adding the following functions from http://fmwebframe.com/application/fm-to-php-translations.php 
 		which were originally developed by Jonathan Stark: http://jonathanstark.com
-		
-		fmChar
-		Returns the characters for the Unicode code points in the number.
-		Example: fmChar ( 98 ) = b
-		
-		fmCode
-		Returns the Unicode code points for the characters in the text.
-		Example: fmCode ( 'b' ) = 98
-		
-		fmDate
-		Returns the calendar date for month, day, and year.
-		Example: fmDate ( 11, 27, 1968 ) = 11/27/1968
 		
 		fmDay
 		Returns a number in the range 1 through 31, representing the day of the month on which date occurs.
