@@ -6,7 +6,7 @@ If you'd like to submit code, make a request, report a bug, or offer better code
 
 # Methods and Functions
 
-![Xojo-OpenLib Methods](https://raw.github.com/campsoftware/campsoftware/Xojo-OpenLib/img/Xojo-OpenLib.png)
+![Xojo-OpenLib Methods](https://raw.github.com/campsoftware/Xojo-OpenLib/img/Xojo-OpenLib.png)
 
 Miscellaneous
 - Function DateDayofWeek(extends pDate as Date) As text
