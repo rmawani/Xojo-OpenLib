@@ -538,44 +538,54 @@ Protected Module xol
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function TextParse(extends pText as text, pTagStart as text, pTagEnd as text) As text
-		  // TextParse extracts text between the starting text tag and the ending text tag.
+		Function TextParse(extends pText as text, pTagBegin as text, pTagEnd as text, pOccurrence as integer = 1) As text
+		  // TextParse extracts text between the starting text tag and the ending text tag for a specific occurrence.
 		  // Hal Gumbert, CampSoftware: http://www.CampSoftware.com
 		  //
 		  // TextParse( pText as text, pTagStart as text, pTagEnd as text )
 		  
 		  // Call with a known begin and end tags
-		  // TextParse( "<name>Hal</name>", "<name>", "</name>" ) = Hal
+		  // TextParse( "<name>Lewis</name><name>Nico</name><name>Sebastian</name>", "<name>", "</name>", 3 ) = Sebastian
 		  //
 		  // If you use an xml tag for the begin tag and leave the end tag empty, we assume that it's the closing xml tag. :)
-		  // TextParse( "<name>Hal</name>", "<name>", "" ) = Hal
+		  // TextParse( "<name>Lewis</name><name>Nico</name><name>Sebastian</name>", "<name>", "", 3 ) =Sebastian
 		  
-		  // Code
+		  // Prep
+		  dim theOccurrence as Integer = 1
+		  dim theTagBeginLen, theTextBegin, theTextEnd as integer
+		  theTagBeginLen = Len( pTagBegin )
+		  dim theText as text
 		  
-		  Dim theCodeStart, theCodeEnd, theTagStartLen as integer
-		  Dim theCode as string
-		  
-		  if pTagEnd = "" then
-		    pTagEnd = replace( pTagStart, "<", "</" ).ToText
-		  end if
-		  
-		  theTagStartLen = Len( pTagStart )
-		  
-		  theCodeStart = InStr ( pText, pTagStart )
-		  if theCodeStart > 0 then
-		    theCodeEnd = InStr ( theCodeStart + theTagStartLen, pText, pTagEnd )
-		    if ( theCodeEnd > 0 ) and ( theCodeEnd > theCodeStart ) then
-		      theCode = Mid ( pText, theCodeStart + theTagStartLen, theCodeEnd - theCodeStart - theTagStartLen )
+		  // For each Occurrence
+		  while theOccurrence <= pOccurrence
+		    
+		    // Find the first Occurrence
+		    theTextBegin = InStr ( pText, pTagBegin )
+		    if theTextBegin > 0 then
+		      theTextEnd = InStr ( theTextBegin + theTagBeginLen, pText, pTagEnd )
+		      if ( theTextEnd > 0 ) and ( theTextEnd > theTextBegin ) then
+		        // Get theText for this Occurrence
+		        theText = Mid ( pText, theTextBegin + theTagBeginLen, theTextEnd - theTextBegin - theTagBeginLen ).totext
+		        // Remove the Occurrence with the tag from pText so we can find the next Occurence.
+		        pText = pText.Replace( pTagBegin + theText + pTagEnd, "" )
+		      end if
+		    else
+		      theText = ""
+		      Exit
 		    end if
-		  end if
+		    
+		    // Keep going...
+		    theOccurrence = theOccurrence + 1
+		    
+		  wend
 		  
-		  return theCode.ToText
+		  Return theText
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function TextParse(pText as text, pTagStart as text, pTagEnd as text) As text
-		  return pText.TextParse( pTagStart, pTagEnd )
+		Function TextParse(pText as text, pTagBegin as text, pTagEnd as text, pOccurrence as integer = 1) As text
+		  return pText.TextParse( pTagBegin, pTagEnd, pOccurrence )
 		End Function
 	#tag EndMethod
 
