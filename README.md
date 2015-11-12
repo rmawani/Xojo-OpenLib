@@ -36,15 +36,7 @@ Miscellaneous
 - Function URLEncode(pText as text) As text
 - Function URLShow(pURL As Text) As Boolean
 
-FM Functions - To make moving to Xojo from FileMaker a bit easier.
-The list of functions is from Tim Dietrich http://fmwebframe.com/application/fm-to-php-translations.php 
-which was originally developed by Jonathan Stark: http://jonathanstark.com
-- Function fmAbs(theNum as double) As double
-- Function fmCeiling(theNum as double) As double
-- Function fmChar(pCodeNumber as Integer) As text
-- Function fmCode(pChar as text) As integer
-- Function fmDate(pMonth as integer, pDay as integer, pYear as integer) As xojo.core.Date
-- Will add the functions listed the 'fmFunctions to Add' note over time.
+FM Functions - We will be removing these as Paul Lefebvre is creating 'FM', a FileMaker Library of Functions for Xojo: https://github.com/xojo/FM
 
 # Notes
 - Almost every Method and Function have comments regarding who developed it, the source, and a calling example.
