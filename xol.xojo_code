@@ -31,6 +31,75 @@ Protected Module xol
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function EmailAddressVerify(pEmailAddress as String, pNetworkCheck as Boolean = true) As string
+		  // EmailAddressVerify checks to see if an email address is valid via a syntax and optional MX Record check. 
+		  // Hal Gumbert, CampSoftware: http://www.CampSoftware.com
+		  //
+		  // REQUIRES MBS PLUGIN 
+		  // Function EmailAddressVerify(pEmailAddress as String, pNetworkCheck as Boolean = true) As string
+		  //
+		  // Calling Example
+		  
+		  'dim resultVerifyEmail as string
+		  'resultVerifyEmail = EmailAddressVerify( "halcampsoftwarecom", true )
+		  'if resultVerifyEmail <> "OK" then
+		  'MsgBoxAlert( "Alert", resultVerifyEmail )
+		  'end if
+		  
+		  // Code
+		  
+		  dim resultVerifyEmail as integer
+		  dim theValidateMsg as string
+		  
+		  resultVerifyEmail = VerifyEmailMBS( pEmailAddress, pNetworkCheck )
+		  
+		  If resultVerifyEmail = 0 then
+		    return "OK"
+		    
+		  else
+		    select case resultVerifyEmail 
+		    case 1
+		      theValidateMsg = "Invalid character in local part of email address."
+		    case 2
+		      theValidateMsg = "Missing dot in local part of email address."
+		    case 3    
+		      theValidateMsg = "Invalid character in local part of email address."
+		    case 4    
+		      theValidateMsg = "Unescaped special character in local part of email address."
+		    case 5    
+		      theValidateMsg = "No local part in email address."
+		    case 6    
+		      theValidateMsg = "Dot found before @ character."
+		    case 7    
+		      theValidateMsg = "No domain in email address."
+		    case 8    
+		      theValidateMsg = "Domain starting with dot."
+		    case 9    
+		      theValidateMsg = "Domain is not allowed to have two dots."
+		    case 10   
+		      theValidateMsg = "Invalid character in domain of email address."
+		    case 11    
+		      theValidateMsg = "Special character in domain of email address."
+		    case 12    
+		      theValidateMsg = "No dot in domain in email address."
+		    case 13    
+		      theValidateMsg = "Domain longer than allowed in email address."
+		    case 14    
+		      theValidateMsg = "DNS failed to find mail server for the domain in email address. (Windows)"
+		    case 15    
+		      theValidateMsg = "DNS failed to find mail server for the domain in email address. (Mac/Linux)"
+		    case 16    
+		      theValidateMsg = "DNS did not find a mail server for the domain in email address." 
+		    else
+		      theValidateMsg = "Unknown Problem." 
+		    end select
+		    return theValidateMsg
+		    
+		  end if
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function FileTextSave(pFolderItem as folderItem, pText as text) As text
 		  // FileTextSave saves text to a FolderItem.
 		  // Hal Gumbert, CampSoftware: http://www.CampSoftware.com
@@ -65,66 +134,6 @@ Protected Module xol
 		    return "OK"
 		    
 		  #ENDIF
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function fmAbs(pNum as double) As double
-		  'fmAbs
-		  'Returns the absolute value of number.
-		  'Example: fmAbs ( -5.2 ) = 5.2
-		  
-		  return abs(  pNum )
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function fmCeiling(pNum as double) As double
-		  'fmCeiling
-		  'Returns number rounded up to the next integer.
-		  'Example: fmCeiling ( -5.2 ) = -5
-		  
-		  return ceil( pNum )
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function fmChar(pCodeNumber as Integer) As text
-		  'fmChar
-		  'Returns the characters for the Unicode code points in the number.
-		  'Example: fmChar ( 98 ) = b
-		  
-		  return Text.FromUnicodeCodepoint( pCodeNumber )
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function fmCode(pChar as text) As integer
-		  'fmCode
-		  'Returns the Unicode code points for the characters in the text.
-		  'Example: fmCode ( 'b' ) = 98
-		  
-		  For Each codePoint As UInt32 In pChar.Codepoints
-		    return codePoint
-		  Next
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function fmDate(pMonth as integer, pDay as integer, pYear as integer) As xojo.core.Date
-		  'fmDate
-		  'Returns the calendar date for month, day, and year.
-		  'Example: fmDate ( 11, 27, 1968 ) = 11/27/1968
-		  
-		  dim theDate as xojo.core.Date
-		  
-		  if pMonth > 0 and pDay > 0 and pYear > 0 then
-		    theDate = xojo.core.date.fromtext( pYear.ToText + "-" + pMonth.ToText + "-" + pDay.ToText )
-		  else
-		    theDate = Xojo.Core.Date.Now
-		  end if
-		  
-		  Return theDate
 		End Function
 	#tag EndMethod
 
