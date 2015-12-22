@@ -10,7 +10,7 @@ If you'd like to submit code, make a request, report a bug, or offer better code
 
 Miscellaneous
 - Function DateDayofWeek(extends pDate as Date) As text
-- **Function EmailAddressVerify(pEmailAddress as String, pNetworkCheck as Boolean = true) As string**
+- NEW Function EmailAddressVerify(pEmailAddress as String, pNetworkCheck as Boolean = true) As string
 - Function FileTextSave(pFolderItem as folderItem, pText as text) As text
 - Function FolderItemCopy(source as FolderItem, destination as FolderItem) As Boolean
 - Function FolderItemDelete(theFolder as FolderItem, continueIfErrors as Boolean = false) As Integer
@@ -37,7 +37,7 @@ Miscellaneous
 - Function URLEncode(pText as text) As text
 - Function URLShow(pURL As Text) As Boolean
 
-**FM Functions - Have been removed as Paul Lefebvre has created 'FM', a FileMaker Library of Functions for Xojo: https://github.com/xojo/FM **
+FM Functions - Have been removed as Paul Lefebvre has created 'FM', a FileMaker Library of Functions for Xojo: https://github.com/xojo/FM
 
 # Notes
 - Almost every Method and Function have comments regarding who developed it, the source, and a calling example.
